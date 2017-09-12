@@ -284,7 +284,8 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
   }
   
   [view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    [self _traverseAndCall:obj];
+    // See https://github.com/wix/react-native-navigation/issues/1692 for reason on commenting following line
+    //    [self _traverseAndCall:obj];
   }];
 }
 
