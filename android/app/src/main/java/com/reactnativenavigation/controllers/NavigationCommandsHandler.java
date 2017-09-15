@@ -263,7 +263,7 @@ public class NavigationCommandsHandler {
         });
     }
 
-    public static void dismissTopModal(final ScreenParams params) {
+    public static void dismissTopModal() {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;
@@ -272,7 +272,7 @@ public class NavigationCommandsHandler {
         NavigationApplication.instance.runOnMainThread(new Runnable() {
             @Override
             public void run() {
-                currentActivity.dismissTopModal(params);
+                currentActivity.dismissTopModal();
             }
         });
     }

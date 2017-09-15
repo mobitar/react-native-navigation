@@ -21,12 +21,11 @@ import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.SlidingOverlayParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
-import com.reactnativenavigation.params.parsers.ModalAnimationFactory;
 import com.reactnativenavigation.screens.NavigationType;
 
 import java.util.List;
 
-class Modal extends Dialog implements DialogInterface.OnDismissListener, ScreenStackContainer {
+public class Modal extends Dialog implements DialogInterface.OnDismissListener, ScreenStackContainer {
 
     private final AppCompatActivity activity;
     private final OnModalDismissedListener onModalDismissedListener;
@@ -105,13 +104,13 @@ class Modal extends Dialog implements DialogInterface.OnDismissListener, ScreenS
         void onModalDismissed(Modal modal);
     }
 
-    Modal(AppCompatActivity activity, OnModalDismissedListener onModalDismissedListener, ScreenParams screenParams) {
+    public Modal(AppCompatActivity activity, OnModalDismissedListener onModalDismissedListener, ScreenParams screenParams) {
         super(activity, R.style.Modal);
         this.activity = activity;
         this.onModalDismissedListener = onModalDismissedListener;
         this.screenParams = screenParams;
         createContent();
-        setAnimation(screenParams);
+        setAnimation();
     }
 
     public AppCompatActivity getActivity() {
@@ -129,19 +128,18 @@ class Modal extends Dialog implements DialogInterface.OnDismissListener, ScreenS
     }
 
     private void setWindowFlags() {
-        Window window = getWindow();
-        if (window == null) return;
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         }
     }
 
-    private void setAnimation(ScreenParams screenParams) {
-        if (getWindow() == null) return;
-        final WindowManager.LayoutParams attributes = getWindow().getAttributes();
-        attributes.windowAnimations = ModalAnimationFactory.create(screenParams);
-        getWindow().setAttributes(attributes);
+    private void setAnimation() {
+        if (!screenParams.animateScreenTransitions) {
+            if (getWindow() != null) {
+                getWindow().setWindowAnimations(android.R.style.Animation);
+            }
+        }
     }
 
     @Override
@@ -179,16 +177,6 @@ class Modal extends Dialog implements DialogInterface.OnDismissListener, ScreenS
         if (!layout.onBackPressed()) {
             super.onBackPressed();
         }
-    }
-
-    void dismiss(ScreenParams params) {
-        setAnimation(params);
-        NavigationApplication.instance.runOnMainThread(new Runnable() {
-            @Override
-            public void run() {
-                dismiss();
-            }
-        });
     }
 
     @Override

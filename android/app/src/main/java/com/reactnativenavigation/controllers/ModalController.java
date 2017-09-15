@@ -41,9 +41,9 @@ class ModalController implements ScreenStackContainer, Modal.OnModalDismissedLis
         stack.add(modal);
     }
 
-    void dismissTopModal(ScreenParams params) {
+    void dismissTopModal() {
         if (isShowing()) {
-            stack.pop().dismiss(params);
+            stack.pop().dismiss();
         }
     }
 

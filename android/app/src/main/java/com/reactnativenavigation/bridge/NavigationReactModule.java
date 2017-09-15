@@ -18,7 +18,6 @@ import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.params.parsers.ContextualMenuParamsParser;
 import com.reactnativenavigation.params.parsers.FabParamsParser;
 import com.reactnativenavigation.params.parsers.LightBoxParamsParser;
-import com.reactnativenavigation.params.parsers.ScreenParamsParser;
 import com.reactnativenavigation.params.parsers.SlidingOverlayParamsParser;
 import com.reactnativenavigation.params.parsers.SnackbarParamsParser;
 import com.reactnativenavigation.params.parsers.TitleBarButtonParamsParser;
@@ -217,8 +216,8 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void dismissTopModal(final ReadableMap params) {
-        NavigationCommandsHandler.dismissTopModal(ScreenParamsParser.parse(BundleConverter.toBundle(params)));
+    public void dismissTopModal() {
+        NavigationCommandsHandler.dismissTopModal();
     }
 
     @ReactMethod
