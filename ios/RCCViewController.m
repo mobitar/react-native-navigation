@@ -234,7 +234,8 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
 
 - (void)sendGlobalScreenEvent:(NSString *)eventName endTimestampString:(NSString *)endTimestampStr shouldReset:(BOOL)shouldReset {
 
-  if (!self.commandType) return;
+  // Commented out because: https://github.com/wix/react-native-navigation/issues/1771
+//  if (!self.commandType) return;
 
   if ([self.view isKindOfClass:[RCTRootView class]]){
     NSString *screenName = [((RCTRootView*)self.view) moduleName];
@@ -292,7 +293,7 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
 // rnn issue - https://github.com/wix/react-native-navigation/issues/1858
 - (void)_traverseAndFixScrollViewSafeArea:(UIView *)view {
 #ifdef __IPHONE_11_0
-  if ([view isKindOfClass:UIScrollView.class]) {
+  if ([view isKindOfClass:UIScrollView.class] && [view respondsToSelector:@selector(setContentInsetAdjustmentBehavior:)]) {
     [((UIScrollView*)view) setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
   }
 
@@ -464,6 +465,13 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
       [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     }
     [viewController setNeedsStatusBarAppearanceUpdate];
+  }
+  
+  NSNumber *tabBarHidden = self.navigatorStyle[@"tabBarHidden"];
+  BOOL tabBarHiddenBool = tabBarHidden ? [tabBarHidden boolValue] : NO;
+  if (tabBarHiddenBool) {
+    UITabBar *tabBar = viewController.tabBarController.tabBar;
+    tabBar.transform = CGAffineTransformMakeTranslation(0, tabBar.frame.size.height);
   }
 
   NSNumber *navBarHidden = self.navigatorStyle[@"navBarHidden"];
