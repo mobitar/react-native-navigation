@@ -175,8 +175,8 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void push(final ReadableMap params) {
-        NavigationCommandsHandler.push(BundleConverter.toBundle(params));
+    public void push(final ReadableMap params, Promise onPushComplete) {
+        NavigationCommandsHandler.push(BundleConverter.toBundle(params), onPushComplete);
     }
 
     @ReactMethod
