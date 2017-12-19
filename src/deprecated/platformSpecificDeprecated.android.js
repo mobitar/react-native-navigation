@@ -9,7 +9,7 @@ const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSou
 
 import * as newPlatformSpecific from './../platformSpecific';
 
-function startSingleScreenApp(params) {
+async function startSingleScreenApp(params) {
   const screen = params.screen;
   if (!screen.screen) {
     console.error('startSingleScreenApp(params): screen must include a screen property');
@@ -35,7 +35,7 @@ function startSingleScreenApp(params) {
   params.overrideBackPress = screen.overrideBackPress;
   params.animateShow = convertAnimationType(params.animationType);
 
-  newPlatformSpecific.startApp(params);
+  return await newPlatformSpecific.startApp(params);
 }
 
 function getOrientation(params) {
@@ -255,7 +255,7 @@ function adaptNavigationParams(screen) {
   return screen;
 }
 
-function startTabBasedApp(params) {
+async function startTabBasedApp(params) {
   if (!params.tabs) {
     console.error('startTabBasedApp(params): params.tabs is required');
     return;
@@ -293,7 +293,7 @@ function startTabBasedApp(params) {
   params.sideMenu = convertDrawerParamsToSideMenuParams(params.drawer);
   params.animateShow = convertAnimationType(params.animationType);
 
-  newPlatformSpecific.startApp(params);
+  return await newPlatformSpecific.startApp(params);
 }
 
 function addTabIcon(tab) {
