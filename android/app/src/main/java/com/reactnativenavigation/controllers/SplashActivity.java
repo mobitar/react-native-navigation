@@ -11,7 +11,6 @@ import android.view.View;
 
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.ReactDevPermission;
-import com.reactnativenavigation.utils.CompatUtils;
 
 public abstract class SplashActivity extends AppCompatActivity {
     public static boolean isResumed = false;
@@ -40,10 +39,6 @@ public abstract class SplashActivity extends AppCompatActivity {
         isResumed = true;
 
         if (NavigationApplication.instance.getReactGateway().hasStartedCreatingContext()) {
-            if (CompatUtils.isSplashOpenedOverNavigationActivity(this, getIntent())) {
-                finish();
-                return;
-            }
             NavigationApplication.instance.getEventEmitter().sendAppLaunchedEvent();
             if (NavigationApplication.instance.clearHostOnActivityDestroy()) {
                 overridePendingTransition(0, 0);
