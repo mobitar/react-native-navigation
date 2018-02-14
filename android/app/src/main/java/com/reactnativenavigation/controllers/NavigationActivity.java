@@ -62,9 +62,9 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!NavigationApplication.instance.getReactGateway().hasStartedCreatingContext()) {
-            SplashActivity.start(this);
-            finish();
+        if (!NavigationApplication.instance.isReactContextInitialized()) {
+            NavigationApplication.instance.startReactContextOnceInBackgroundAndExecuteJS();
+            return;
         }
 
         activityParams = NavigationCommandsHandler.parseActivityParams(getIntent());
