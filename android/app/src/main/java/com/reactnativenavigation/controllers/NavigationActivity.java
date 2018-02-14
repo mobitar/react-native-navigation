@@ -66,7 +66,6 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         if (!NavigationApplication.instance.getReactGateway().hasStartedCreatingContext()) {
             SplashActivity.start(this);
             finish();
-            return;
         }
 
         activityParams = NavigationCommandsHandler.parseActivityParams(getIntent());
