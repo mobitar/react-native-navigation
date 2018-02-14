@@ -13,8 +13,6 @@ import com.reactnativenavigation.params.FabParams;
 import com.reactnativenavigation.params.SnackbarParams;
 import com.reactnativenavigation.screens.Screen;
 
-import java.util.EmptyStackException;
-
 public class SnackbarAndFabContainer extends CoordinatorLayout implements Snakbar.OnDismissListener, Subscriber{
     private Snakbar snakbar;
     private FloatingActionButtonCoordinator fabCoordinator;
@@ -70,12 +68,7 @@ public class SnackbarAndFabContainer extends CoordinatorLayout implements Snakba
             @Override
             public void run() {
                 if (fabParams != null) {
-                    Screen currentScreen = null;
-                    try {
-                        currentScreen = layout.getCurrentScreen();
-                    } catch(EmptyStackException exception) {
-                        currentScreen = null;
-                    }
+                    Screen currentScreen = layout.getCurrentScreen();
                     if (currentScreen != null && currentScreen.getScreenInstanceId().equals(fabParams.screenInstanceId)) {
                         fabCoordinator.add(fabParams);
                     }
