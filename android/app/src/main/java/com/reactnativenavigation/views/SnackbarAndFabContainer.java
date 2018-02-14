@@ -11,7 +11,6 @@ import com.reactnativenavigation.events.Subscriber;
 import com.reactnativenavigation.layouts.Layout;
 import com.reactnativenavigation.params.FabParams;
 import com.reactnativenavigation.params.SnackbarParams;
-import com.reactnativenavigation.screens.Screen;
 
 public class SnackbarAndFabContainer extends CoordinatorLayout implements Snakbar.OnDismissListener, Subscriber{
     private Snakbar snakbar;
@@ -68,8 +67,7 @@ public class SnackbarAndFabContainer extends CoordinatorLayout implements Snakba
             @Override
             public void run() {
                 if (fabParams != null) {
-                    Screen currentScreen = layout.getCurrentScreen();
-                    if (currentScreen != null && currentScreen.getScreenInstanceId().equals(fabParams.screenInstanceId)) {
+                    if (layout.getCurrentScreen().getScreenInstanceId().equals(fabParams.screenInstanceId)) {
                         fabCoordinator.add(fabParams);
                     }
                 }
