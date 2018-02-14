@@ -34,10 +34,6 @@ public class EventEmitter {
         sendGlobalScreenChangedEvent("didDisappear", params.timestamp, params.screenId, type);
     }
 
-    public void sendActivityResumed(String id) {
-        sendScreenChangedEventToJsScreen("onActivityResumed", id);
-    }
-
     private void sendScreenChangedEventToJsScreen(String eventId, String navigatorEventId) {
         WritableMap map = Arguments.createMap();
         map.putString("type", "ScreenChangedEvent");

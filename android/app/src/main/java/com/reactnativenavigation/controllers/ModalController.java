@@ -188,8 +188,4 @@ class ModalController implements ScreenStackContainer, Modal.OnModalDismissedLis
     String getCurrentlyVisibleScreenId() {
         return stack.peek().getCurrentlyVisibleScreenId();
     }
-
-    String getCurrentlyVisibleEventId() {
-        return stack.peek().getCurrentlyVisibleEventId();
-    }
 }
