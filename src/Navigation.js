@@ -132,19 +132,11 @@ function dismissInAppNotification(params = {}) {
 }
 
 async function startTabBasedApp(params) {
-  try {
-    return await platformSpecific.startTabBasedApp(params);
-  } catch(e) {
-    console.error(`Error while starting app: ${e}`);
-  }
+  return await platformSpecific.startTabBasedApp(params);
 }
 
 async function startSingleScreenApp(params) {
-  try {
-    return await platformSpecific.startSingleScreenApp(params);
-  } catch(e) {
-    console.error(`Error while starting app: ${e}`);
-  }
+  return await platformSpecific.startSingleScreenApp(params);
 }
 
 function setEventHandler(navigatorEventID, eventHandler) {
