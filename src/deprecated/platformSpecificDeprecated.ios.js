@@ -12,7 +12,7 @@ import _ from 'lodash';
 
 import PropRegistry from '../PropRegistry';
 
-async function startTabBasedApp(params) {
+function startTabBasedApp(params) {
   if (!params.tabs) {
     console.error('startTabBasedApp(params): params.tabs is required');
     return;
@@ -101,10 +101,10 @@ async function startTabBasedApp(params) {
   _.set(params, 'passProps.timestamp', Date.now());
 
   ControllerRegistry.registerController(controllerID, () => Controller);
-  return await ControllerRegistry.setRootController(controllerID, params.animationType, params.passProps || {});
+  ControllerRegistry.setRootController(controllerID, params.animationType, params.passProps || {});
 }
 
-async function startSingleScreenApp(params) {
+function startSingleScreenApp(params) {
   if (!params.screen) {
     console.error('startSingleScreenApp(params): params.screen is required');
     return;
@@ -179,7 +179,7 @@ async function startSingleScreenApp(params) {
   savePassProps(params);
 
   ControllerRegistry.registerController(controllerID, () => Controller);
-  return await ControllerRegistry.setRootController(controllerID, params.animationType, params.passProps || {});
+  ControllerRegistry.setRootController(controllerID, params.animationType, params.passProps || {});
 }
 
 function _mergeScreenSpecificSettings(screenID, screenInstanceID, params) {
