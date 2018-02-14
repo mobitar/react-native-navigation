@@ -5,9 +5,9 @@ import PropRegistry from './PropRegistry';
 
 const NativeReactModule = NativeModules.NavigationReactModule;
 
-async function startApp(activityParams) {
+function startApp(activityParams) {
   savePassProps(activityParams);
-  return await NativeReactModule.startApp(activityParams);
+  NativeReactModule.startApp(activityParams);
 }
 
 function push(screenParams) {
