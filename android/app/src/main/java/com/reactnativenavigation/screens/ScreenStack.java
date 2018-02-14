@@ -9,7 +9,6 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
 import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.Promise;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.ContextualMenuParams;
 import com.reactnativenavigation.params.FabParams;
@@ -58,14 +57,14 @@ public class ScreenStack {
         final Screen nextScreen = ScreenFactory.create(activity, params, leftButtonOnClickListener);
         final Screen previousScreen = stack.peek();
         if (isStackVisible) {
-            pushScreenToVisibleStack(layoutParams, nextScreen, previousScreen, null, new Screen.OnDisplayListener() {
+            pushScreenToVisibleStack(layoutParams, nextScreen, previousScreen, new Screen.OnDisplayListener() {
                 @Override
                 public void onDisplay() {
                     removeElementsBelowTop();
                 }
             });
         } else {
-            pushScreenToInvisibleStack(layoutParams, nextScreen, previousScreen, null);
+            pushScreenToInvisibleStack(layoutParams, nextScreen, previousScreen);
             removeElementsBelowTop();
         }
     }
@@ -98,29 +97,28 @@ public class ScreenStack {
         addScreen(initialScreen, params);
     }
 
-    public void push(final ScreenParams params, LayoutParams layoutParams, Promise onPushComplete) {
+    public void push(final ScreenParams params, LayoutParams layoutParams) {
         Screen nextScreen = ScreenFactory.create(activity, params, leftButtonOnClickListener);
         final Screen previousScreen = stack.peek();
         if (isStackVisible) {
             if (nextScreen.screenParams.sharedElementsTransitions.isEmpty()) {
-                pushScreenToVisibleStack(layoutParams, nextScreen, previousScreen, onPushComplete);
+                pushScreenToVisibleStack(layoutParams, nextScreen, previousScreen);
             } else {
-                pushScreenToVisibleStackWithSharedElementTransition(layoutParams, nextScreen, previousScreen, onPushComplete);
+                pushScreenToVisibleStackWithSharedElementTransition(layoutParams, nextScreen, previousScreen);
             }
         } else {
-            pushScreenToInvisibleStack(layoutParams, nextScreen, previousScreen, onPushComplete);
+            pushScreenToInvisibleStack(layoutParams, nextScreen, previousScreen);
         }
     }
 
     private void pushScreenToVisibleStack(LayoutParams layoutParams, final Screen nextScreen,
-                                          final Screen previousScreen, Promise onPushComplete) {
-        pushScreenToVisibleStack(layoutParams, nextScreen, previousScreen, onPushComplete, null);
+                                          final Screen previousScreen) {
+        pushScreenToVisibleStack(layoutParams, nextScreen, previousScreen, null);
     }
 
     private void pushScreenToVisibleStack(LayoutParams layoutParams,
                                           final Screen nextScreen,
                                           final Screen previousScreen,
-                                          @Nullable final Promise onPushComplete,
                                           @Nullable final Screen.OnDisplayListener onDisplay) {
         nextScreen.setVisibility(View.INVISIBLE);
         addScreen(nextScreen, layoutParams);
@@ -132,7 +130,6 @@ public class ScreenStack {
                     @Override
                     public void run() {
                         if (onDisplay != null) onDisplay.onDisplay();
-                        if (onPushComplete != null) onPushComplete.resolve(null);
                         NavigationApplication.instance.getEventEmitter().sendDidDisappearEvent(previousScreen.getScreenParams(), NavigationType.Push);
                         parent.removeView(previousScreen);
                     }
@@ -141,8 +138,7 @@ public class ScreenStack {
         });
     }
 
-    private void pushScreenToVisibleStackWithSharedElementTransition(LayoutParams layoutParams, final Screen nextScreen,
-                                                                     final Screen previousScreen, @Nullable final Promise onPushComplete) {
+    private void pushScreenToVisibleStackWithSharedElementTransition(LayoutParams layoutParams, final Screen nextScreen, final Screen previousScreen) {
         nextScreen.setVisibility(View.INVISIBLE);
         nextScreen.setOnDisplayListener(new Screen.OnDisplayListener() {
             @Override
@@ -150,7 +146,6 @@ public class ScreenStack {
                 nextScreen.showWithSharedElementsTransitions(previousScreen.sharedElements.getToElements(), new Runnable() {
                     @Override
                     public void run() {
-                        if (onPushComplete != null) onPushComplete.resolve(null);
                         parent.removeView(previousScreen);
                     }
                 });
@@ -159,15 +154,8 @@ public class ScreenStack {
         addScreen(nextScreen, layoutParams);
     }
 
-    private void pushScreenToInvisibleStack(LayoutParams layoutParams, Screen nextScreen, Screen previousScreen,
-                                            @Nullable final Promise onPushComplete) {
+    private void pushScreenToInvisibleStack(LayoutParams layoutParams, Screen nextScreen, Screen previousScreen) {
         nextScreen.setVisibility(View.INVISIBLE);
-        nextScreen.setOnDisplayListener(new Screen.OnDisplayListener() {
-            @Override
-            public void onDisplay() {
-                if (onPushComplete != null) onPushComplete.resolve(null);
-            }
-        });
         addScreen(nextScreen, layoutParams);
         parent.removeView(previousScreen);
     }

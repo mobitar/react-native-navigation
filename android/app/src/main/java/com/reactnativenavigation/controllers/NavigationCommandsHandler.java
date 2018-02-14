@@ -47,7 +47,7 @@ public class NavigationCommandsHandler {
         NavigationApplication.instance.startActivity(intent);
     }
 
-    public static void push(Bundle screenParams, final Promise onPushComplete) {
+    public static void push(Bundle screenParams) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;
@@ -57,7 +57,7 @@ public class NavigationCommandsHandler {
         NavigationApplication.instance.runOnMainThread(new Runnable() {
             @Override
             public void run() {
-                currentActivity.push(params, onPushComplete);
+                currentActivity.push(params);
             }
         });
     }

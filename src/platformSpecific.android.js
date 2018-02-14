@@ -12,7 +12,7 @@ function startApp(activityParams) {
 
 function push(screenParams) {
   savePassProps(screenParams);
-  return NativeReactModule.push(screenParams);
+  NativeReactModule.push(screenParams);
 }
 
 function pop(screenParams) {

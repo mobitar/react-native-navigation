@@ -80,7 +80,7 @@ function navigatorPush(navigator, params) {
   adapted.overrideBackPress = params.overrideBackPress;
   adapted.timestamp = Date.now();
 
-  return newPlatformSpecific.push(adapted);
+  newPlatformSpecific.push(adapted);
 }
 
 function navigatorPop(navigator, params) {

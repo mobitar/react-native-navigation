@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.Promise;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.events.EventBus;
 import com.reactnativenavigation.events.ScreenChangedEvent;
@@ -140,8 +139,8 @@ public class SingleScreenLayout extends BaseLayout {
     }
 
     @Override
-    public void push(ScreenParams params, Promise onPushComplete) {
-        stack.push(params, new LayoutParams(MATCH_PARENT, MATCH_PARENT), onPushComplete);
+    public void push(ScreenParams params) {
+        stack.push(params, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
         EventBus.instance.post(new ScreenChangedEvent(params));
     }
 

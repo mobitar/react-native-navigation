@@ -9,7 +9,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.Promise;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.layouts.Layout;
@@ -144,8 +143,8 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener, 
     }
 
     @Override
-    public void push(ScreenParams params, Promise onPushComplete) {
-        layout.push(params, onPushComplete);
+    public void push(ScreenParams params) {
+        layout.push(params);
     }
 
     @Override
