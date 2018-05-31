@@ -351,7 +351,7 @@ RCT_EXPORT_METHOD(
             controller.modalPresentationStyle = modalPresentationStyle;
         }
     }
-    
+
     [[RCCManagerModule lastModalPresenterViewController] presentViewController:controller
                                                                       animated:![animationType isEqualToString:@"none"]
                                                                     completion:^(){ resolve(nil); }];

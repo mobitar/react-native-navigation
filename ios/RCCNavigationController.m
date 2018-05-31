@@ -459,8 +459,15 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   }
 
   _transitioning = YES;
+  
+  [CATransaction begin];
+  [CATransaction setCompletionBlock:^(){
+    _transitioning = NO;
+  }];
 
   [super pushViewController:viewController animated:animated];
+  
+  [CATransaction commit];
 }
 
 
