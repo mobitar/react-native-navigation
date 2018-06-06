@@ -213,7 +213,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     }
     else
     {
-      if (self.viewControllers.count > 0)
+      if (self.viewControllers.count > 1)
       {
          [self.viewControllers.lastObject viewWillDisappear:animated];
       }
@@ -255,7 +255,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
 
     BOOL animated = actionParams[@"animated"] ? [actionParams[@"animated"] boolValue] : YES;
 
-    if (self.viewControllers.count > 0)
+    if (self.viewControllers.count > 1)
     {
        [self.viewControllers.lastObject viewWillDisappear:animated];
     }
